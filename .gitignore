@@ -37,4 +37,7 @@ out/
 .vscode/
 
 ### Settings ###
-*.properties
+.env
+
+### Build ###
+build/libs/*.jar
