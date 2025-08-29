@@ -48,5 +48,4 @@ public class ImagesController {
         Images savedImage = imagesService.uploadImage(file);
         return ResponseUtil.success(HttpStatus.CREATED, request.getRequestURI(), savedImage);
     }
-
 }

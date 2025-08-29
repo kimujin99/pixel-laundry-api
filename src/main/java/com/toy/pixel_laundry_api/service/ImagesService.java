@@ -57,16 +57,17 @@ public class ImagesService {
         // 이미지 변환 및 업로드
         Map<String, BufferedImage> imagesMap = new HashMap<>();
         imagesMap.put("original", originalImage);
-        imagesMap.put("small", Scalr.resize(originalImage, 150));
-        imagesMap.put("medium", Scalr.resize(originalImage, 300));
-        imagesMap.put("large", Scalr.resize(originalImage, 600));
-        imagesMap.put("blur", Scalr.apply(Scalr.resize(originalImage, 300)));
+        imagesMap.put("blur", Scalr.apply(Scalr.resize(originalImage, 32)));
+        imagesMap.put("small", Scalr.resize(originalImage, 360));
+        imagesMap.put("medium", Scalr.resize(originalImage, 720));
+        imagesMap.put("large", Scalr.resize(originalImage, 1440));
 
         for (Map.Entry<String, BufferedImage> entry : imagesMap.entrySet()) {
-            String key = uuid + "/" + entry.getKey() + ".webp";
+            String format = entry.getKey().equals("original") ? extension : "webp";
+            String key = uuid + "/" + entry.getKey() + "." + format;
 
             ByteArrayOutputStream os = new ByteArrayOutputStream();
-            ImageIO.write(entry.getValue(), "webp", os);
+            ImageIO.write(entry.getValue(), format, os);
             byte[] bytes = os.toByteArray();
 
             PutObjectRequest putObjectRequest = PutObjectRequest.builder()
